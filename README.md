@@ -1,8 +1,7 @@
 <div align="center">
 
-  <img src="https://raw.githubusercontent.com/l3commerce/.github/main/profile/banner.png" width="100%" alt="l3commerce banner" />
+  <img src="https://raw.githubusercontent.com/l3commerce/.github/main/cover.png" width="100%" alt="l3commerce banner" />
 
-  # l3commerce
   ### Conceptual Containerized Solutions & Production-Grade Development Stacks
 
   <p>
