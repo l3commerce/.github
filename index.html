@@ -106,18 +106,18 @@
 
         .nav-links {
             display: flex;
-            gap: 24px;
+            gap: 12px;
             align-items: center;
         }
 
-        .btn-github {
+        .btn-social {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
@@ -125,7 +125,7 @@
             transition: all 0.2s ease;
         }
 
-        .btn-github:hover {
+        .btn-social:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--accent-orange);
             transform: translateY(-1px);
@@ -233,149 +233,6 @@
             background: var(--accent-orange);
         }
 
-        /* Repositories Section */
-        .section-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .section-header h2 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-        }
-
-        .repos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 24px;
-            margin-bottom: 96px;
-        }
-
-        .repo-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .repo-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .repo-card:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-card-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .repo-card:hover::before {
-            opacity: 1;
-        }
-
-        .repo-top {
-            margin-bottom: 16px;
-        }
-
-        .repo-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .repo-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .repo-name:hover {
-            color: var(--accent-orange);
-        }
-
-        .repo-badge {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: var(--text-muted);
-        }
-
-        .repo-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .repo-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-        }
-
-        .repo-stack {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .stack-pill {
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-            background: rgba(239, 49, 104, 0.1);
-            color: #ff8fa3;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .repo-link {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: gap 0.2s ease;
-        }
-
-        .repo-link:hover {
-            gap: 8px;
-        }
-
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
@@ -400,9 +257,6 @@
         }
 
         @media (max-width: 768px) {
-            .repos-grid {
-                grid-template-columns: 1fr;
-            }
             .hero {
                 padding: 64px 0 40px 0;
             }
@@ -423,9 +277,13 @@
                 <span class="logo-text">l3commerce</span>
             </a>
             <div class="nav-links">
-                <a href="https://github.com/l3commerce" target="_blank" class="btn-github">
+                <a href="https://github.com/l3commerce" target="_blank" class="btn-social">
                     <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
-                    GitHub Org
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/company/l3commerce" target="_blank" class="btn-social">
+                    <svg height="16" width="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    LinkedIn
                 </a>
             </div>
         </header>
@@ -447,7 +305,7 @@
             <!-- Tech Stack Ticker -->
             <div class="tech-tags">
                 <div class="tech-tag"><span></span>Docker Compose</div>
-                <div class="tech-tag"><span></span>Node.js 24</div>
+                <div class="tech-tag"><span></span>Node.js</div>
                 <div class="tech-tag"><span></span>NGINX Proxy</div>
                 <div class="tech-tag"><span></span>PHP & MySQL</div>
                 <div class="tech-tag"><span></span>Grafana & Monitoring</div>
@@ -456,158 +314,10 @@
             </div>
         </section>
 
-        <!-- Repositories Showcase Section -->
-        <section style="padding: 40px 0 96px 0;">
-            <div class="section-header">
-                <h2>Featured Architecture Blueprints</h2>
-                <p>Public repositories designed for robustness, high performance, and rapid deployment.</p>
-            </div>
-
-            <div class="repos-grid">
-                <!-- Repo 1 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce/docker-js" target="_blank" class="repo-name">
-                                docker-js
-                            </a>
-                            <span class="repo-badge">Active</span>
-                        </div>
-                        <p class="repo-desc">Lightweight containerized development environment featuring a Node.js (v24-slim) application fronted by an NGINX alpine reverse proxy with dynamic DNS resolution.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">Node.js</span>
-                            <span class="stack-pill">NGINX</span>
-                            <span class="stack-pill">Docker</span>
-                        </div>
-                        <a href="https://github.com/l3commerce/docker-js" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Repo 2 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
-                                docker-php-mysql
-                            </a>
-                            <span class="repo-badge">Blueprint</span>
-                        </div>
-                        <p class="repo-desc">Optimized modular PHP application stack coupled with MySQL storage and persistent volume management for local and staging workflows.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">PHP</span>
-                            <span class="stack-pill">MySQL</span>
-                            <span class="stack-pill">Docker</span>
-                        </div>
-                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Repo 3 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
-                                infra-monitoring
-                            </a>
-                            <span class="repo-badge">Observability</span>
-                        </div>
-                        <p class="repo-desc">Comprehensive system monitoring setup featuring Grafana dashboards, Prometheus metrics collectors, and container health telemetry.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">Grafana</span>
-                            <span class="stack-pill">Prometheus</span>
-                            <span class="stack-pill">Docker</span>
-                        </div>
-                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Repo 4 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
-                                ansible-automations
-                            </a>
-                            <span class="repo-badge">Provisioning</span>
-                        </div>
-                        <p class="repo-desc">Reusable Ansible playbooks and roles for automated server provisioning, security hardening, and zero-downtime deployment pipelines.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">Ansible</span>
-                            <span class="stack-pill">DevOps</span>
-                            <span class="stack-pill">YAML</span>
-                        </div>
-                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Repo 5 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
-                                vagrant-stacks
-                            </a>
-                            <span class="repo-badge">Virtualization</span>
-                        </div>
-                        <p class="repo-desc">Local virtual machine server environments configured via Vagrant and VirtualBox for testing multi-node clustered setups.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">Vagrant</span>
-                            <span class="stack-pill">VirtualBox</span>
-                            <span class="stack-pill">Bash</span>
-                        </div>
-                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Repo 6 -->
-                <div class="repo-card">
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
-                                backup-automations
-                            </a>
-                            <span class="repo-badge">Reliability</span>
-                        </div>
-                        <p class="repo-desc">Automated backup rotation, volume snapshots, and secure remote offsite syncing scripts for database and application assets.</p>
-                    </div>
-                    <div class="repo-footer">
-                        <div class="repo-stack">
-                            <span class="stack-pill">Bash</span>
-                            <span class="stack-pill">Cron</span>
-                            <span class="stack-pill">Docker</span>
-                        </div>
-                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
-                            View Source &rarr;
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Footer -->
         <footer>
-            <p>&copy; 2026 l3commerce. All rights reserved. Hosted via Cloudflare Edge / GitHub Pages.</p>
-            <p>Crafted for speed, simplicity, and engineering excellence.</p>
+            <p>&copy; 2026 l3commerce. All rights reserved. Hosted via Cloudflare Edge.</p>
+            <p>Connect with us on <a href="https://www.linkedin.com/company/l3commerce" target="_blank">LinkedIn</a> &bull; Crafted for speed, simplicity, and engineering excellence.</p>
         </footer>
     </div>
 
