@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>l3commerce — Containerized Development & Infrastructure Portals</title>
+    <meta name="description" content="Conceptual containerized solutions for modern web development: Docker, Node.js, NGINX, PHP, MySQL, Grafana, Ansible, and Vagrant.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0b0e;
+            --bg-card: #12151c;
+            --bg-card-hover: #191d26;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(247, 107, 77, 0.4);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-pink: #ef3168;
+            --accent-orange: #f76b4d;
+            --accent-gradient: linear-gradient(135deg, #ef3168 0%, #f76b4d 50%, #fea134 100%);
+            --accent-gradient-subtle: linear-gradient(135deg, rgba(239, 49, 104, 0.15) 0%, rgba(247, 107, 77, 0.15) 100%);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background ambient glow */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(239, 49, 104, 0.12) 0%, rgba(247, 107, 77, 0.05) 50%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / Navbar */
+        header {
+            padding: 32px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-grid span {
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .logo-grid span:nth-last-child(-n+2) {
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: -0.5px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-github:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-orange);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 96px 0 64px 0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-gradient-subtle);
+            border: 1px solid rgba(247, 107, 77, 0.3);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ff9478;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(239, 49, 104, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(239, 49, 104, 0.4);
+        }
+
+        /* Tech Stack Ticker / Highlights */
+        .tech-tags {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 64px 0 32px 0;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tech-tag span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+        }
+
+        /* Repositories Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 96px;
+        }
+
+        .repo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .repo-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .repo-card:hover::before {
+            opacity: 1;
+        }
+
+        .repo-top {
+            margin-bottom: 16px;
+        }
+
+        .repo-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .repo-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .repo-name:hover {
+            color: var(--accent-orange);
+        }
+
+        .repo-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .repo-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .repo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+
+        .repo-stack {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .stack-pill {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(239, 49, 104, 0.1);
+            color: #ff8fa3;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .repo-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.2s ease;
+        }
+
+        .repo-link:hover {
+            gap: 8px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 48px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: var(--accent-orange);
+        }
+
+        @media (max-width: 768px) {
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                padding: 64px 0 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="#" class="logo-area">
+                <div class="logo-grid">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+                <span class="logo-text">l3commerce</span>
+            </a>
+            <div class="nav-links">
+                <a href="https://github.com/l3commerce" target="_blank" class="btn-github">
+                    <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
+                    GitHub Org
+                </a>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="badge-pill">
+                <span>⚡</span> Containerized Infrastructure & Dev Environments
+            </div>
+            <h1>Engineering <span>Modular Systems</span> & Local Stack Blueprints</h1>
+            <p>Welcome to the official portal of <strong>l3commerce</strong>. We curate clean, production-grade conceptual solutions for modern development workflows powered by Docker, Node.js, NGINX, PHP, MySQL, Grafana, Ansible, and Vagrant.</p>
+            <div class="hero-actions">
+                <a href="https://github.com/l3commerce" target="_blank" class="btn-primary">
+                    Explore Organization Repos
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+
+            <!-- Tech Stack Ticker -->
+            <div class="tech-tags">
+                <div class="tech-tag"><span></span>Docker Compose</div>
+                <div class="tech-tag"><span></span>Node.js 24</div>
+                <div class="tech-tag"><span></span>NGINX Proxy</div>
+                <div class="tech-tag"><span></span>PHP & MySQL</div>
+                <div class="tech-tag"><span></span>Grafana & Monitoring</div>
+                <div class="tech-tag"><span></span>Ansible Automation</div>
+                <div class="tech-tag"><span></span>Vagrant Stacks</div>
+            </div>
+        </section>
+
+        <!-- Repositories Showcase Section -->
+        <section style="padding: 40px 0 96px 0;">
+            <div class="section-header">
+                <h2>Featured Architecture Blueprints</h2>
+                <p>Public repositories designed for robustness, high performance, and rapid deployment.</p>
+            </div>
+
+            <div class="repos-grid">
+                <!-- Repo 1 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce/docker-js" target="_blank" class="repo-name">
+                                docker-js
+                            </a>
+                            <span class="repo-badge">Active</span>
+                        </div>
+                        <p class="repo-desc">Lightweight containerized development environment featuring a Node.js (v24-slim) application fronted by an NGINX alpine reverse proxy with dynamic DNS resolution.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">Node.js</span>
+                            <span class="stack-pill">NGINX</span>
+                            <span class="stack-pill">Docker</span>
+                        </div>
+                        <a href="https://github.com/l3commerce/docker-js" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repo 2 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
+                                docker-php-mysql
+                            </a>
+                            <span class="repo-badge">Blueprint</span>
+                        </div>
+                        <p class="repo-desc">Optimized modular PHP application stack coupled with MySQL storage and persistent volume management for local and staging workflows.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">PHP</span>
+                            <span class="stack-pill">MySQL</span>
+                            <span class="stack-pill">Docker</span>
+                        </div>
+                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repo 3 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
+                                infra-monitoring
+                            </a>
+                            <span class="repo-badge">Observability</span>
+                        </div>
+                        <p class="repo-desc">Comprehensive system monitoring setup featuring Grafana dashboards, Prometheus metrics collectors, and container health telemetry.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">Grafana</span>
+                            <span class="stack-pill">Prometheus</span>
+                            <span class="stack-pill">Docker</span>
+                        </div>
+                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repo 4 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
+                                ansible-automations
+                            </a>
+                            <span class="repo-badge">Provisioning</span>
+                        </div>
+                        <p class="repo-desc">Reusable Ansible playbooks and roles for automated server provisioning, security hardening, and zero-downtime deployment pipelines.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">Ansible</span>
+                            <span class="stack-pill">DevOps</span>
+                            <span class="stack-pill">YAML</span>
+                        </div>
+                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repo 5 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
+                                vagrant-stacks
+                            </a>
+                            <span class="repo-badge">Virtualization</span>
+                        </div>
+                        <p class="repo-desc">Local virtual machine server environments configured via Vagrant and VirtualBox for testing multi-node clustered setups.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">Vagrant</span>
+                            <span class="stack-pill">VirtualBox</span>
+                            <span class="stack-pill">Bash</span>
+                        </div>
+                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repo 6 -->
+                <div class="repo-card">
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <a href="https://github.com/l3commerce" target="_blank" class="repo-name">
+                                backup-automations
+                            </a>
+                            <span class="repo-badge">Reliability</span>
+                        </div>
+                        <p class="repo-desc">Automated backup rotation, volume snapshots, and secure remote offsite syncing scripts for database and application assets.</p>
+                    </div>
+                    <div class="repo-footer">
+                        <div class="repo-stack">
+                            <span class="stack-pill">Bash</span>
+                            <span class="stack-pill">Cron</span>
+                            <span class="stack-pill">Docker</span>
+                        </div>
+                        <a href="https://github.com/l3commerce" target="_blank" class="repo-link">
+                            View Source &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 l3commerce. All rights reserved. Hosted via Cloudflare Edge / GitHub Pages.</p>
+            <p>Crafted for speed, simplicity, and engineering excellence.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
